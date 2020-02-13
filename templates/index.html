@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>TwitterTrends | Home</title>
+    <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/fonts/simple-line-icons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/styles.min.css' %}">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="index.html" style="color: #488aff; font-size: 24px;">#TwitterTrends</a>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Solutions</a>
+                        <div class="dropdown-menu" role="menu">
+                            <a class="dropdown-item" role="presentation" href="#">HashtagAnalysis</a>
+                            <a class="dropdown-item" role="presentation" href="#">Follower Tracking</a>
+                            <a class="dropdown-item" role="presentation" href="#">Brand Monitoring</a>
+                            <a class="dropdown-item" role="presentation" href="#">Cometitive Analysis</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item" role="presentation"><a class="nav-link active">Hello {{user.username}}</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link active" href="dashboard">Dashboard</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="profile">Profile</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link active" href="logout">Logout</a></li>
+                    {% else %}
+                        <li class="nav-item" role="presentation"><a class="nav-link active" href="login">Login</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link active" href="signup">Signup</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="page landing-page">
+        <header class="masthead text-white text-center" style="background: no-repeat center center;background-size: cover;background-image: linear-gradient(#488AFF,#FFFFFF);background-color:#488AFF;padding: 64px;height: 559px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-9 mx-auto">
+                        <h1 class="mb-5" style="padding: 0px;height: 144px;"><br>
+                            <strong>MOST RELIABLE HASHTAG</strong><br>
+                            <strong>TRACKING TOOL</strong><br><br>
+                        </h1>
+                        <h1 class="mb-5" style="font-size: 24px;"><br>
+                            <strong>A HASSLE-FREE WAY TO TRACK HASHTAGS</strong><br>
+                            <strong>KEYWORDS, AND SOCIAL ACCOUNTS</strong><br><br>
+                        </h1>
+                    </div>
+                    <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+
+                        <form method="GET" action="dashboard" onsubmit="return validateForm()">
+                            <div class="form-row">
+                                <div class="col-12 col-md-9 mb-2 mb-md-0"><input class="form-control form-control-lg" type="etext" placeholder="Enter #Hashtag OR Keyword to track ..." style="background-color: #ffffff;" name="keyword" id="keyword" autocomplete="off"></div>
+                                <div class="col-12 col-md-3"><button class="btn btn-primary btn-block btn-lg text-white" type="submit">Search</button></div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="clean-block features">
+            <div class="container">
+                <div class="block-heading">
+                    <h2 class="text-info">Features</h2>
+                    <p>TwitterTrends Tracks,listen,sifts,combs your data for you.</p>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-5 feature-box"><i class="icon icon-screen-desktop"></i>
+                        <h4>Hashtag Analytics</h4>
+                        <p>Track all posts of twitter hashtag as well any twitter account quickly. Take the assistance of our tool to measure metrics including twitter impressions, sentiments, viral content.</p>
+                    </div>
+                    <div class="col-md-5 feature-box"><i class="icon-pencil icon"></i>
+                        <h4>Influencer Marketing</h4>
+                        <p>Influencer Analytics to understand exactly how much each influencer is impacting your campaigns and brand goals</p>
+                    </div>
+                    <div class="col-md-5 feature-box"><i class="icon-clock icon"></i>
+                        <h4>Real-Time Data</h4>
+                        <p>Real-time engagement and reach metrics so your data is always accurate and ready to go</p>
+                    </div>
+                    <div class="col-md-5 feature-box"><i class="icon-refresh icon"></i>
+                        <h4>Brand Monitoring</h4>
+                        <p>Instantly discover how people feel about your brand & competitors online.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="page-footer dark">
+            <div class="footer-copyright">
+                <p>TwitterTrends</p>
+            </div>
+        </footer>
+
+        <script>
+            function validateForm() {
+                if (document.getElementById('keyword').value.length == 0) {
+                    alert("Please enter the Keyword");
+                    document.getElementById('keyword').style.borderColor = "red";
+                    return false;
+                } else
+                    return true;
+            }
+
+        </script>
+
+        <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+        <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'assets/js/script.min.js' %}"></script>
+        <script src="{% static 'assets/js/bs-animation.js' %}"></script>
+</body>
+
+</html>
