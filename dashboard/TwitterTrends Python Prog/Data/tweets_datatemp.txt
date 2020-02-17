@@ -1,0 +1,16 @@
+[
+    {
+        "name": "pravin",
+        "age": "21",
+        "parents":{
+            "name":"sohanlal"
+        }
+    },
+    {       
+        "name": "pravin",
+        "age": "21",
+        "parents":{
+            
+        }
+    }
+]

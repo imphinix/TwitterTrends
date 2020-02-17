@@ -91,7 +91,8 @@ def main(request):
     api = TwitterClient()
     # calling function to get tweets 
     keyword = request.GET['keyword']
-    tweets = api.get_tweets(query = keyword, count = 100000) 
+    print(keyword)
+    tweets = api.get_tweets(query = keyword, count = 100) 
 
     print("------------------------------------------------------------------------------------------------")
     print(tweets)
@@ -115,14 +116,15 @@ def main(request):
     sa_result_nv = round( (100*len(ntweets)/len(tweets)) , 2)
 
     
-    # printing first 5 positive tweets 
-    print("\n\nPositive tweets:") 
-    for tweet in ptweets: 
-        print(tweet['text']) 
+    # # printing first 5 positive tweets 
+    # print("\n\nPositive tweets:") 
+    # for tweet in ptweets: 
+    #     print(tweet['text']) 
 
-    # printing first 5 negative tweets 
-    print("\n\nNegative tweets:") 
-    for tweet in ntweets: 
-        print(tweet['text'])
-    
+    # # printing first 5 negative tweets 
+    # print("\n\nNegative tweets:") 
+    # for tweet in ntweets: 
+    #     print(tweet['text'])
+
+
     return render(request,'dashboard.html',{'pv':sa_result_pv,'nt':sa_result_nt,'nv':sa_result_nv,'keyword':keyword})

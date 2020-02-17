@@ -10,12 +10,27 @@
     <link rel="stylesheet" href="{% static 'assets/fonts/simple-line-icons.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/styles.min.css' %}">
 
+    <style type="text/css">
+        #loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;        
+            width: 100%;
+            height: 100%;
+            background: #ffffff url("{% static 'loading_screen/loader.gif' %}") no-repeat center center;
+            z-index: 10000;
+        }
+    </style>
+
 </head>
 
 <body>
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
         <div class="container">
-            <a class="navbar-brand" href="index.html" style="color: #488aff; font-size: 24px;">#TwitterTrends</a>
+            <a class="navbar-brand" href="index" style="color: #488aff; font-size: 24px;">#TwitterTrends</a>
             <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="navbar-toggler-icon"></span>
@@ -65,8 +80,11 @@
                     <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
 
                         <form method="GET" action="dashboard" onsubmit="return validateForm()">
+                        {% comment %} <form method="GET" action="dashboard" onsubmit="return doprocess()"> {% endcomment %}
                             <div class="form-row">
-                                <div class="col-12 col-md-9 mb-2 mb-md-0"><input class="form-control form-control-lg" type="etext" placeholder="Enter #Hashtag OR Keyword to track ..." style="background-color: #ffffff;" name="keyword" id="keyword" autocomplete="off"></div>
+                                <div class="col-12 col-md-9 mb-2 mb-md-0">
+                                    <input class="form-control form-control-lg" type="etext" placeholder="Enter #Hashtag OR Keyword to track ..." style="background-color: #ffffff;" name="keyword" id="keyword" autocomplete="off">
+                                </div>
                                 <div class="col-12 col-md-3"><button class="btn btn-primary btn-block btn-lg text-white" type="submit">Search</button></div>
                             </div>
                         </form>
@@ -107,6 +125,8 @@
             </div>
         </footer>
 
+        <div id="loader"></div>
+
         <script>
             function validateForm() {
                 if (document.getElementById('keyword').value.length == 0) {
@@ -115,8 +135,19 @@
                     return false;
                 } else
                     return true;
-            }
+            } 
 
+            function doprocess(){
+                if (document.getElementById('keyword').value.length == 0) {
+                    alert("Please enter the Keyword");
+                    document.getElementById('keyword').style.borderColor = "red";
+                    return false;
+                }
+                else{
+                    var spinner = $('#loader');
+                    spinner.show();
+                }
+                }
         </script>
 
         <script src="{% static 'assets/js/jquery.min.js' %}"></script>
