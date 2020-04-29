@@ -91,8 +91,10 @@
                 </div>
             </nav>
 
-
             <div class="content">
+                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#">
+                    Generate Report
+                </a>
                 <div class="text-uppercase text-info font-weight-bold text-xs mb-1">
                     <span style="font-size: 16px;">Results for :: {{keyword}}</span>
                 </div>
@@ -109,7 +111,7 @@
                                     <div class="col-7 col-md-8">
                                         <div class="numbers">
                                             <p class="card-category">Total Posts</p>
-                                            <p class="card-title">-</p>
+                                            <p class="card-title">{{total_post}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -128,7 +130,7 @@
                                     <div class="col-7 col-md-8">
                                         <div class="numbers">
                                             <p class="card-category">Total Users</p>
-                                            <p class="card-title">-</p>
+                                            <p class="card-title">{{total_user}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -147,7 +149,7 @@
                                     <div class="col-7 col-md-8">
                                         <div class="numbers">
                                             <p class="card-category">Total Reach</p>
-                                            <p class="card-title">-</p>
+                                            <p class="card-title">{{total_reach}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -195,7 +197,6 @@
                                             <div class="col">
                                                 <div class="progress progress-sm">
                                                     <div class="progress-bar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: {{pv}}%; background-color: green;"></div>
-                                                    <div class="progress-bar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: {{nt}}%; background-color: yellow;"></div>
                                                     <div class="progress-bar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: {{nv}}%; background-color: red;"></div>
                                                 </div>
                                             </div>
@@ -211,11 +212,53 @@
                         </div>
                     </div>
                 </div>
+
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="card shadow border-left-info py-2">
+                            <div class="card-body">
+                                {% comment %} {% include "topUsedHashtags.html" %} {% endcomment %}
+                                <div>
+                                    <div style="display: flex;justify-content: center;align-items: center;">
+                                        <canvas id="topUsedHashtags" width="1000" height="1000"></canvas>
+                                    </div>          
+                                </div>
+                           </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="card shadow border-left-info py-2">
+                            <div class="card-body">
+                                {% comment %} {% include "topLanguages.html" %} {% endcomment %}
+                                <div>
+                                    <div style="display: flex;justify-content: center;align-items: center;">
+                                        <canvas id="topLanguages" width="1000" height="1000"></canvas>
+                                    </div>  
+                                </div>
+                           </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="card shadow border-left-info py-2">
+                            <div class="card-body">
+                                {% comment %} {% include "rtorgRatio.html" %} {% endcomment %}
+                                <div>
+                                    <div style="display: flex;justify-content: center;align-items: center;">
+                                        <canvas id="rtorg" width="1000" height="1000"></canvas>
+                                    </div>
+                                </div>
+                           </div>
+                        </div>
+                    </div>  
+                </div>
             </div>
         </div>
     </div>
     <!--   Core JS Files   -->
     <script src="{% static 'assets-2/js/core/jquery.min.js' %}"></script>
+    <!-- chart js file-->
+    <script src="{% static 'assets-2/js/core/Chart.bundle.min.js' %}"></script>
     <script src="{% static 'assets-2/js/core/popper.min.js' %}"></script>
     <script src="{% static 'assets-2/js/core/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets-2/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
@@ -229,6 +272,182 @@
             demo.initChartsPages();
         });
     </script>
+
+    <!-- retweet original ratio -->
+    <!-- ############################################################################################### -->
+    <script>
+        $.ajax({
+                    method:'GET',
+                    url:'data/v'+"{{version}}",
+                    success:function(data){
+                        console.log(data);
+                        new Chart(document.getElementById("rtorg"), {
+                            type: 'doughnut',
+                            data: {
+                                labels: ["Rtweet","Original"],
+                                datasets: [
+                                    {
+                                        label: "Retweet Original Count",
+                                         backgroundColor: ["#3e95cd", "#8e5ea2"],
+                                        data: data.rtorgRatio,
+                                    },
+                                ]
+                            },
+                            options: {
+                                title: {
+                                    display : true,
+                                    text : "Retweet Original Count",
+                                    fontSize : 22.0
+                                 },
+                                responsive: true,
+                            }
+                        });
+                    },
+                    error:function(data){
+                        console.log('Error!');
+                    }
+                });
+    </script>
+    <!-- ############################################################################################### -->
+
+    <!-- top languages -->
+    <!-- ############################################################################################### -->
+    <script>
+        $.ajax({
+            method:'GET',
+            url:'data/v'+"{{version}}",
+            success:function(data){
+                console.log(data);
+                new Chart(document.getElementById("topLanguages"), {
+                    type: 'bar',
+                    data: {
+                        //labels:{{topLanguages}},
+                        labels: data.languages,
+                        datasets: [
+                            {
+                                label: "Languages count",
+                                backgroundColor: "rgba(62, 149, 205, 0.5)",
+                                borderColor : "rgba(62, 149, 205, 1)",
+                                pointBackgroundColor: "rgba(62, 149, 205, 1)",
+                                //data: topLanguagesCount,
+                                data: data.languages_count,
+                            },
+                        ]
+                    },
+                    options: {
+                        legend: {
+                            labels: {
+                                fontSize: 18
+                            }
+                        },
+                        title: {
+                            display : true,
+                            text : "Top 5 Used Languages",
+                            fontSize : 22.0
+                         },
+                        scales: {
+                            yAxes: [{
+                                ticks:{
+                                    beginAtZero: true,
+                                    fontSize:15.0,
+                                },
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Count',
+                                    fontSize :20.0,
+                                }
+                            }],
+                            xAxes: [{
+                                ticks:{
+                                  fontSize: 15.0,
+                                },
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Languages',
+                                    fontSize : 20.0,
+                                }
+                            }]
+                          },
+                        responsive: true,
+                    }
+                });
+            },
+            error:function(data){
+                console.log('Error!');
+            }
+        });
+    </script>
+    <!-- ############################################################################################### -->
+
+    <!-- top hashtags used -->
+    <!-- ############################################################################################### -->
+    <script>
+        $.ajax({
+            method:'GET',
+            url:'data/v'+"{{version}}",
+            success:function(data){
+
+                new Chart(document.getElementById("topUsedHashtags"), {
+                    type: 'bar',
+                    data: {
+                        labels: data.hashtags,
+                        datasets: [
+                            {
+                                label: "hashtag count",
+                                backgroundColor: [
+                                    "#aec7e8", "#ffbb78", "#d62728 ", "#98df8a ", "#1f77b4", "#ff7f0e ", "#2ca02c ",
+                                    "#FF6380","#FF0000","#40E0D0","#FA8072","#339905","#98FB98","#FF8C00","#00FA9A",
+                                    "#DC143C","#FF1493","#FF69B4","#F08080","#FFA500","#FF4500"],
+                                borderColor : "rgba(62, 149, 205, 1)",
+                                pointBackgroundColor: "rgba(62, 149, 205, 1)",
+                                data: data.hashtags_count,
+                            },
+                        ]
+                    },
+                    options: {
+                        legend: {
+                            labels: {
+                                fontSize: 18
+                            }
+                        },
+                        title: {
+                            display : true,
+                            text : "Top 5 Used Hashtags ",
+                            fontSize : 22.0
+                         },
+                        scales: {
+                            yAxes: [{
+                                ticks:{
+                                    beginAtZero: true,
+                                    fontSize:15.0,
+                                },
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Count',
+                                    fontSize :20.0,
+                                }
+                            }],
+                            xAxes: [{
+                                ticks:{
+                                  fontSize: 15.0,
+                                },
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Hashtags',
+                                    fontSize : 20.0,
+                                }
+                            }]
+                          },
+                        responsive: true,
+                    }
+                });
+            },
+            error:function(data){
+                console.log('Error!');
+            }
+        });
+    </script>
+    <!-- ############################################################################################### -->
 </body>
 
 </html>

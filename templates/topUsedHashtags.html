@@ -1,0 +1,75 @@
+{% load static %}
+        <div>
+            <div style="display: flex;justify-content: center;align-items: center;">
+                <canvas id="topUsedHashtags" width="1000" height="1000"></canvas>
+            </div>
+        </div>
+
+        <script src="{% static 'assets-2/js/core/jquery.min.js' %}"></script>
+        <script src="{% static 'assets-2/js/core/Chart.bundle.min.js' %}"></script>
+        <script>
+            $.ajax({
+                method:'GET',
+                url:'data',
+                success:function(data){
+
+					new Chart(document.getElementById("topUsedHashtags"), {
+                        type: 'bar',
+                        data: {
+                            labels: data.hashtags,
+                            datasets: [
+                                {
+                                    label: "hashtag count",
+                                    backgroundColor: [
+                                        "#aec7e8", "#ffbb78", "#d62728 ", "#98df8a ", "#1f77b4", "#ff7f0e ", "#2ca02c ",
+                                        "#FF6380","#FF0000","#40E0D0","#FA8072","#339905","#98FB98","#FF8C00","#00FA9A",
+                                        "#DC143C","#FF1493","#FF69B4","#F08080","#FFA500","#FF4500"],
+                                    borderColor : "rgba(62, 149, 205, 1)",
+                                    pointBackgroundColor: "rgba(62, 149, 205, 1)",
+                                    data: data.hashtags_count,
+                                },
+                            ]
+                        },
+                        options: {
+                            legend: {
+                                labels: {
+                                    fontSize: 18
+                                }
+                            },
+                            title: {
+                                display : true,
+                                text : "Top 5 Used Hashtags ",
+                                fontSize : 22.0
+                             },
+                            scales: {
+                                yAxes: [{
+                                    ticks:{
+                                        beginAtZero: true,
+                                        fontSize:15.0,
+                                    },
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Count',
+                                        fontSize :20.0,
+                                    }
+                                }],
+                                xAxes: [{
+                                    ticks:{
+                                      fontSize: 15.0,
+                                    },
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Hashtags',
+                                        fontSize : 20.0,
+                                    }
+                                }]
+                              },
+                            responsive: true,
+                        }
+                    });
+                },
+                error:function(data){
+                    console.log('Error!');
+                }
+            });
+        </script>

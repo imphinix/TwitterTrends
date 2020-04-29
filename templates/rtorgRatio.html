@@ -1,0 +1,45 @@
+{% load static %}
+
+<div>
+    <div style="display: flex;justify-content: center;align-items: center;">
+        <canvas id="rtorg" width="1000" height="1000"></canvas>
+    </div>
+</div>
+
+
+<script src="{% static 'assets-2/js/core/jquery.min.js' %}"></script>
+<script src="{% static 'assets-2/js/core/Chart.bundle.min.js' %}"></script>
+
+<script>
+    $.ajax({
+                method:'GET',
+                url:'data',
+                success:function(data){
+                    console.log(data);
+					new Chart(document.getElementById("rtorg"), {
+                        type: 'doughnut',
+                        data: {
+                            labels: ["Rtweet","Original"],
+                            datasets: [
+                                {
+                                    label: "Retweet Original Count",
+                                     backgroundColor: ["#3e95cd", "#8e5ea2"],
+                                    data: data.rtorgRatio,
+                                },
+                            ]
+                        },
+                        options: {
+                            title: {
+                                display : true,
+                                text : "Retweet Original Count",
+                                fontSize : 22.0
+                             },
+                            responsive: true,
+                        }
+                    });
+                },
+                error:function(data){
+                    console.log('Error!');
+                }
+            });
+</script>

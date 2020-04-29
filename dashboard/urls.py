@@ -1,9 +1,12 @@
 from django.urls import path
-from . import views,sentimate_analysis
+from . import views
 
-urlpatterns = [    
-#    path('dashboard',sentimate_analysis.main,name='main'),
-     path('dashboard',sentimate_analysis.main,name='main'),
-     path('profile',views.profile,name='profile'),
-    
+from .views import getRandomVersion
+
+urlpatterns = [
+    path('dashboard',views.loadDashboardPage,name='dashboard'),
+    path('data/v'+getRandomVersion(), views.get_data),
 ]
+
+
+print(getRandomVersion())

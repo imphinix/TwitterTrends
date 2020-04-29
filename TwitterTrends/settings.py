@@ -20,18 +20,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'dll__ndpoqnc9jkn+5*m=ulzk@1t*8_q7esczc5cd#*$n_dl+8'
+SECRET_KEY = 'ya&&ur!=6&ck!580o6a-r(0t7ubm&rw-2823p$f4%sujeh+e_#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
+
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'Home.apps.HomeConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -54,7 +54,7 @@ ROOT_URLCONF = 'TwitterTrends.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [   os.path.join(BASE_DIR,'templates')],
+        'DIRS': [ os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,13 +75,8 @@ WSGI_APPLICATION = 'TwitterTrends.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'ENGINE' :  'django.db.backends.postgresql',
-        'NAME'   :  'TwitterTrends',
-        'USER'   :  'postgres',
-        'PASSWORD': 'root',
-        'HOST' : 'localhost',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 

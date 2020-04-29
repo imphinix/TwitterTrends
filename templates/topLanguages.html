@@ -1,0 +1,99 @@
+{% load static %}
+        <div>
+            <div style="display: flex;justify-content: center;align-items: center;">
+                <canvas id="topLanguages" width="1000" height="1000"></canvas>
+            </div>
+        </div>
+
+        {% comment %} <canvas id="pie-chart" width="800" height="450"></canvas> {% endcomment %}
+
+
+        <script src="{% static 'assets-2/js/core/jquery.min.js' %}"></script>
+        <script src="{% static 'assets-2/js/core/Chart.bundle.min.js' %}"></script>
+
+        {% comment %} <script>
+            new Chart(document.getElementById("pie-chart"), {
+                type: 'pie',
+                data: {
+                    labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+                    datasets: [{
+                        label: "Population (millions)",
+                        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                        data: [2478,5267,734,784,433]
+                        }]
+                    },
+                    options: {
+                    title: {
+                        display: true,
+                        text: 'Predicted world population (millions) in 2050'
+                    }
+                }
+            });
+
+        </script> {% endcomment %}
+
+        <script>
+            $.ajax({
+                method:'GET',
+                url:'data1',
+                success:function(data){
+                    console.log(data);
+					new Chart(document.getElementById("topLanguages"), {
+                        type: 'bar',
+                        data: {
+                            //labels:{{topLanguages}},
+                            labels: data.languages,
+                            datasets: [
+                                {
+                                    label: "Languages count",
+                                    backgroundColor: "rgba(62, 149, 205, 0.5)",
+                                    borderColor : "rgba(62, 149, 205, 1)",
+                                    pointBackgroundColor: "rgba(62, 149, 205, 1)",
+                                    //data: topLanguagesCount,
+                                    data: data.languages_count,
+                                },
+                            ]
+                        },
+                        options: {
+                            legend: {
+                                labels: {
+                                    fontSize: 18
+                                }
+                            },
+                            title: {
+                                display : true,
+                                text : "Top 5 Used Languages",
+                                fontSize : 22.0
+                             },
+                            scales: {
+                                yAxes: [{
+                                    ticks:{
+                                        beginAtZero: true,
+                                        fontSize:15.0,
+                                    },
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Count',
+                                        fontSize :20.0,
+                                    }
+                                }],
+                                xAxes: [{
+                                    ticks:{
+                                      fontSize: 15.0,
+                                    },
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Languages',
+                                        fontSize : 20.0,
+                                    }
+                                }]
+                              },
+                            responsive: true,
+                        }
+                    });
+                },
+                error:function(data){
+                    console.log('Error!');
+                }
+            });
+        </script>

@@ -79,8 +79,8 @@
                     </div>
                     <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
 
-                        <form method="GET" action="dashboard" onsubmit="return validateForm()">
-                        {% comment %} <form method="GET" action="dashboard" onsubmit="return doprocess()"> {% endcomment %}
+                        {% comment %} <form method="GET" action="dashboard" onsubmit="return validateForm()"> {% endcomment %}
+                        <form method="GET" action="fetch_tweets" onsubmit="return doprocess()">
                             <div class="form-row">
                                 <div class="col-12 col-md-9 mb-2 mb-md-0">
                                     <input class="form-control form-control-lg" type="etext" placeholder="Enter #Hashtag OR Keyword to track ..." style="background-color: #ffffff;" name="keyword" id="keyword" autocomplete="off">
